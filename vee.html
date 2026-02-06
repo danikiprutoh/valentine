@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Be My Valentine 💘</title>
+
+  <style>
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: radial-gradient(circle at top, #ffe1ec, #fff);
+      overflow:hidden;
+    }
+
+    .card{
+      width:min(520px, 92vw);
+      background:#ffffffcc;
+      border:1px solid #ffd1df;
+      backdrop-filter: blur(8px);
+      border-radius:24px;
+      padding:32px 22px;
+      text-align:center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+      position:relative;
+    }
+
+    h1{
+      margin:0 0 14px;
+      font-size: clamp(28px, 4vw, 40px);
+    }
+
+    .heart{
+      font-size:46px;
+      animation: pop 1.2s infinite ease-in-out;
+      margin-bottom:10px;
+    }
+
+    @keyframes pop{
+      0%,100%{ transform: scale(1); }
+      50%{ transform: scale(1.12); }
+    }
+
+    .buttons{
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      margin-top:18px;
+      position:relative;
+      min-height:54px;
+    }
+
+    button{
+      border:none;
+      padding:14px 18px;
+      border-radius:14px;
+      font-size:16px;
+      font-weight:600;
+      cursor:pointer;
+      box-shadow:0 10px 20px rgba(0,0,0,0.12);
+      transition:.15s;
+    }
+
+    #yesBtn{
+      background:#ff2f6d;
+      color:white;
+    }
+
+    #noBtn{
+      background:white;
+      border:1px solid #ffb3c7;
+      color:#ff2f6d;
+      position:relative;
+    }
+
+    .agreement{
+      display:none;
+      margin-top:20px;
+      text-align:left;
+      font-size:15px;
+      color:#555;
+    }
+
+    .agreement ul{
+      list-style:none;
+      padding:0;
+      margin-top:10px;
+      line-height:1.6;
+    }
+
+    .result{
+      margin-top:18px;
+      font-size:18px;
+      font-weight:700;
+      color:#ff2f6d;
+    }
+
+    .bg-heart{
+      position:absolute;
+      font-size:20px;
+      opacity:.35;
+      animation: floatUp linear infinite;
+      pointer-events:none;
+    }
+
+    @keyframes floatUp{
+      0%{ transform: translateY(0); opacity:0; }
+      10%{ opacity:.35; }
+      100%{ transform: translateY(-110vh); opacity:0; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <div class="heart">💘</div>
+
+    <h1>Will you be my Valentine?</h1>
+
+    <div class="buttons" id="btnWrap">
+      <button id="yesBtn">Yes 😍</button>
+      <button id="noBtn">No 🙈</button>
+    </div>
+
+    <!-- Appears AFTER clicking Yes -->
+    <div class="agreement" id="agreement">
+      <p><strong>By clicking Yes, you agree to:</strong></p>
+      <ul>
+        <li> Unlimited love & affection</li>
+        <li> Free hugs anytime</li>
+        <li> Laughing together a lot</li>
+        <li> Sex on the balcony 🙂</li>
+        
+      </ul>
+    </div>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const agreement = document.getElementById("agreement");
+    const result = document.getElementById("result");
+
+    yesBtn.addEventListener("click", () => {
+      agreement.style.display = "block";
+      result.textContent = "Deal accepted 💖 See you on Valentine’s!";
+      burstHearts();
+    });
+
+    noBtn.addEventListener("mouseenter", moveNoBtn);
+    noBtn.addEventListener("click", moveNoBtn);
+
+    function moveNoBtn(){
+      const wrap = document.getElementById("btnWrap").getBoundingClientRect();
+      const btn = noBtn.getBoundingClientRect();
+      noBtn.style.position = "absolute";
+      noBtn.style.left = Math.random() * (wrap.width - btn.width) + "px";
+      noBtn.style.top  = Math.random() * (wrap.height - btn.height) + "px";
+    }
+
+    function burstHearts(){
+      for(let i=0;i<18;i++){
+        const h = document.createElement("span");
+        h.className = "bg-heart";
+        h.textContent = ["💗","💖","💘","💕"][Math.floor(Math.random()*4)];
+        h.style.left = Math.random()*100 + "vw";
+        h.style.bottom = "-20px";
+        h.style.animationDuration = (3 + Math.random()*3) + "s";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),6000);
+      }
+    }
+  </script>
+</body>
+</html>
